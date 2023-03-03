@@ -1,5 +1,5 @@
 # LilyPond Ruby
-[![Gem Version](https://badge.fury.io/rb/LilyPond-Ruby@2x.png)](https://badge.fury.io/rb/LilyPond-Ruby)
+[![Gem Version](https://badge.fury.io/rb/LilyPond-Ruby.svg)](https://badge.fury.io/rb/LilyPond-Ruby)
 
 LilyPond Ruby is a Ruby library for controlling LilyPond, a music notation
 software. It allows LilyPond files, compile them into various formats
