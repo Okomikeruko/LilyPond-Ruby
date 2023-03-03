@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "LilyPond-Ruby"
-  s.version     = "0.0.1"
+  s.version     = "0.0.1-a"
   s.summary     = "Access and control Lilypond from within Ruby"
   s.description = "This gem provides a library to access and control Lilypond from Ruby"
   s.authors     = ["Lee Whittaker"]

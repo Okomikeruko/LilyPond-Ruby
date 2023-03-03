@@ -4,7 +4,7 @@ class LilyPond
   class << self
 
     def version
-      output, error, status = Open3.capture3("bin/lilypond", "--version")
+      output, error, status = Open3.capture3("lilypond", "--version")
       if status.success?
         puts output
       else
