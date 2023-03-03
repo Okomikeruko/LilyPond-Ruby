@@ -1,10 +1,11 @@
 require "open3"
 
 class LilyPond
+  LYPATH = File.expand_path("../../bin/lilypond", __FILE__)
   class << self
 
     def version
-      output, error, status = Open3.capture3("bin/lilypond", "--version")
+      output, error, status = Open3.capture3(LYPATH, "--version")
       if status.success?
         puts output
       else
@@ -13,7 +14,7 @@ class LilyPond
     end
 
     def generate_pdf_with_lilypond(file_name, lilypond_code)
-      Open3.popen3('bin/lilypond', '--pdf', file_name) do |stdin, stdout, stderr, wait_thr|
+      Open3.popen3(LYPATH, '--pdf', file_name) do |stdin, stdout, stderr, wait_thr|
         # Write the Lilypond code to stdin
         stdin.write(lilypond_code)
         stdin.close
