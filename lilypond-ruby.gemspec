@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.description = "This gem provides a library to access and control Lilypond from Ruby"
   s.authors     = ["Lee Whittaker"]
   s.email       = "whittakerlee81@gmail.com"
-  s.files       = Dir["lib/**/*.rb"] + Dir["bin/*"]
+  s.files       = Dir["lib/**/*.rb", "bin/*"]
   s.executables << "lilypond"
   s.homepage    = "https://github.com/Okomikeruko/LilyPond-Ruby"
   s.license     = "MIT"
