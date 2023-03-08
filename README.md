@@ -1,5 +1,6 @@
 # LilyPond Ruby
 [![Gem Version](https://badge.fury.io/rb/LilyPond-Ruby.svg)](https://badge.fury.io/rb/LilyPond-Ruby)
+[![GitHub version](https://badge.fury.io/gh/Okomikeruko%2FLilyPond-Ruby.svg)](https://badge.fury.io/gh/Okomikeruko%2FLilyPond-Ruby)
 
 LilyPond Ruby is a Ruby library for controlling LilyPond, a music notation
 software. It allows LilyPond files, compile them into various formats
@@ -33,8 +34,8 @@ LilyPond.generate_pdf_with_lilypond(file_name, lilypond_file)
 
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at
-https://github.com/your_username/RubyLy. This project is intended to be a safe,
-welcoming space for collaboration, and contributors are expected to adhere
+https://github.com/Okomikeruko/LilyPond-Ruby. This project is intended to be a
+safe, welcoming space for collaboration, and contributors are expected to adhere
 to the [Contributor Covenant](https://www.contributor-covenant.org/)
 code of conduct.
 

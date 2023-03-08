@@ -1,11 +1,13 @@
 require "open3"
+require "lilypond/builder"
+require "guile"
 
 class LilyPond
-  LYPATH = File.expand_path("../../bin/lilypond", __FILE__)
+  LILYPOND_PATH = File.expand_path("../../bin/lilypond", __FILE__)
   class << self
 
     def version
-      output, error, status = Open3.capture3(LYPATH, "--version")
+      output, error, status = Open3.capture3(LILYPOND_PATH, "--version")
       if status.success?
         puts output
       else
@@ -13,8 +15,20 @@ class LilyPond
       end
     end
 
+    def version_number
+      output, error, status = Open3.capture3(LILYPOND_PATH, "--version")
+      if status.success?
+        return output.match(/GNU LilyPond (\d+\.\d+\.\d+)/)[1]
+      else
+        return "#{error}"
+      end
+    end
+
     def generate_pdf_with_lilypond(file_name, lilypond_code)
-      Open3.popen3(LYPATH, '--pdf', file_name) do |stdin, stdout, stderr, wait_thr|
+      tempfile = Tempfile.new(file_name)
+      tempfile.write(lilypond_code)
+      tempfile.close
+      Open3.popen3(LILYPOND_PATH, "--pdf", tempfile.path) do |stdin, stdout, stderr, wait_thr|
         # Write the Lilypond code to stdin
         stdin.write(lilypond_code)
         stdin.close
@@ -42,6 +56,7 @@ class LilyPond
           break
         end
       end
+      File.delete(tempfile.path)
     end
 
   end # end self
