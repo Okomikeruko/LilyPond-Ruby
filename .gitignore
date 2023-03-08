@@ -1,0 +1,5 @@
+# Ignore gemfile lock
+Gemfile.lock
+
+# Ignore gem output files
+*.gem
