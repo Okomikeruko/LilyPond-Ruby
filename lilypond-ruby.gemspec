@@ -16,5 +16,5 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/Okomikeruko/LilyPond-Ruby"
   s.license     = "MIT"
 
-  s.add_runtime_dependency "ffi"
+  s.add_runtime_dependency "ffi", '~> 1.15', '>= 1.15.5'
 end

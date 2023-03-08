@@ -27,7 +27,7 @@ LilyPond file:
 ```
 require 'lilypond-ruby'
 lilypond_file = IO.open("score.ly")
-file_name = "score"
+file_name = "score.ly"
 
 LilyPond.generate_pdf_with_lilypond(file_name, lilypond_file)
 ```
