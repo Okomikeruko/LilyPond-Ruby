@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "LilyPond-Ruby"
-  s.version     = "0.1.2"
+  s.version     = "0.1.3"
   s.summary     = "Access and control Lilypond from within Ruby"
   s.description = <<~END_OF_STRING
     This gem provides a library to access and control Lilypond within Ruby.
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Lee Whittaker"]
   s.email       = "whittakerlee81@gmail.com"
   s.files       = Dir["lib/**/*", "bin/**/*", "etc/**/*", "share/**/*"]
-  s.executables << "lilypond"
+  s.executables += %w(abc2ly convert-ly etf2ly lilymidi lilypond-book lilypond-invoke-editor lilypond lilysong midi2ly musicxml2ly)
   s.homepage    = "https://github.com/Okomikeruko/LilyPond-Ruby"
   s.license     = "MIT"
 
