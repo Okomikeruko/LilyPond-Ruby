@@ -22,14 +22,15 @@ bundle install
 ```
 
 ## Usage
-Here's an example of how to use LilyPond Ruby to genearate a PDF file from a
-LilyPond file:
-```
-require 'lilypond-ruby'
-lilypond_file = IO.open("score.ly")
-file_name = "score.ly"
 
-LilyPond.generate_pdf_with_lilypond(file_name, lilypond_file)
+Here's an example of how to use LilyPond Ruby to generate a PDF file from a LilyPond file:
+```ruby
+require 'lilypond-ruby'
+
+lilypond_code = File.read('score.ly')
+file_name = 'score.ly'
+
+LilyPond.generate_pdf_with_lilypond(file_name, lilypond_code)
 ```
 
 ## Contributing
