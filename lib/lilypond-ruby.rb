@@ -3,7 +3,7 @@ require "lilypond/builder"
 require "guile"
 
 class LilyPond
-  LILYPOND_PATH = File.expand_path("../../bin/lilypond", __FILE__)
+  LILYPOND_PATH = File.expand_path("../../lilypond-2.24.1/bin/lilypond", __FILE__)
   class << self
 
     def version
