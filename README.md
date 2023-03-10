@@ -21,6 +21,20 @@ And then execute:
 bundle install
 ```
 
+## Configuration
+I built this gem with Rails in mind, so in my app's `config/initializers` directory
+I added the `lilypond.rb`file with the following information:
+
+```ruby
+require "lilypond-ruby"
+
+LilyPond.configuration do |config|
+  config.default_output = :pdf # options: [:pdf, :svg, :png]
+  config.destination_directory = "storage/lilypond" # (TODO: make this work)
+  config.lilypond_path = File.expand_path("../../../lilypond-2.24.1/bin/lilypond", __FILE__) # wherever your LilyPond installation is.
+end
+```
+
 ## Usage
 
 Here's an example of how to use LilyPond Ruby to generate a PDF file from a LilyPond file:
