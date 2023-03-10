@@ -1,13 +1,12 @@
 require "open3"
 require "lilypond/builder"
+require "lilypond/config"
 require "guile"
 
-class LilyPond
-  LILYPOND_PATH = File.expand_path("../../lilypond-2.24.1/bin/lilypond", __FILE__)
+module LilyPond
   class << self
-
     def version
-      output, error, status = Open3.capture3(LILYPOND_PATH, "--version")
+      output, error, status = Open3.capture3(path, "--version")
       if status.success?
         puts output
       else
@@ -16,7 +15,7 @@ class LilyPond
     end
 
     def version_number
-      output, error, status = Open3.capture3(LILYPOND_PATH, "--version")
+      output, error, status = Open3.capture3(path, "--version")
       if status.success?
         return output.match(/GNU LilyPond (\d+\.\d+\.\d+)/)[1]
       else
@@ -24,11 +23,14 @@ class LilyPond
       end
     end
 
-    def generate_pdf_with_lilypond(file_name, lilypond_code)
+    # Approved output types: `[:pdf, :svg, :png]` If none is provided, it defaults to
+    # LilyPond.configuration.default_output, which initializes as `:pdf`
+    def generate_pdf_with_lilypond(file_name, lilypond_code, output_type = nil)
       tempfile = Tempfile.new(file_name)
       tempfile.write(lilypond_code)
       tempfile.close
-      Open3.popen3(LILYPOND_PATH, "--pdf", tempfile.path) do |stdin, stdout, stderr, wait_thr|
+      output_type ||= LilyPond.configuration.default_output
+      Open3.popen3(path, "--#{output}", tempfile.path) do |stdin, stdout, stderr, wait_thr|
         # Write the Lilypond code to stdin
         stdin.write(lilypond_code)
         stdin.close
@@ -58,6 +60,11 @@ class LilyPond
       end
       File.delete(tempfile.path)
     end
+
+    private
+      def path
+        LilyPond.configuration.lilypond_path
+      end
 
   end # end self
 end # end LilyPond

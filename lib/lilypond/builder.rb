@@ -1,7 +1,7 @@
 require_relative "../lilypond-ruby.rb"
 
-# The LilyPond class provides an interface for generating LilyPond notation.
-class LilyPond
+# The LilyPond module provides an interface for generating LilyPond notation.
+module LilyPond
   # The Builder class is responsible for building LilyPond notation.
   class Builder
     # Creates a new LilyPond Builder object.
