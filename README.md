@@ -8,6 +8,8 @@ software. It allows LilyPond files, compile them into various formats
 through Ruby code.
 
 ## Installation
+Download and install LilyPond from http://lilypond.org/download.html
+
 To install LilyPond Ruby, run the following command:
 ```
 gem install LilyPond-Ruby
@@ -30,8 +32,8 @@ require "lilypond-ruby"
 
 LilyPond.configuration do |config|
   config.default_output = :pdf # options: [:pdf, :svg, :png]
-  config.destination_directory = "storage/lilypond" # (TODO: make this work)
-  config.lilypond_path = File.expand_path("../../../lilypond-2.24.1/bin/lilypond", __FILE__) # wherever your LilyPond installation is.
+  config.destination_directory = Rails.root.join("storage", "lilypond") # Where the output files will go.
+  config.lilypond_path = Rails.root.join("public", "lilypond-2.24.1", "bin", "lilypond") # wherever your LilyPond installation command lives.
 end
 ```
 
@@ -44,7 +46,7 @@ require 'lilypond-ruby'
 lilypond_code = File.read('score.ly')
 file_name = 'score.ly'
 
-LilyPond.generate_pdf_with_lilypond(file_name, lilypond_code)
+LilyPond.generate_with_lilypond(file_name, lilypond_code, :pdf)
 ```
 
 ## Contributing

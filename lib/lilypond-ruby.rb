@@ -25,45 +25,55 @@ module LilyPond
 
     # Approved output types: `[:pdf, :svg, :png]` If none is provided, it defaults to
     # LilyPond.configuration.default_output, which initializes as `:pdf`
-    def generate_pdf_with_lilypond(file_name, lilypond_code, output_type = nil)
+    def generate_with_lilypond(file_name, lilypond_code, output_type = nil)
       tempfile = Tempfile.new(file_name)
       tempfile.write(lilypond_code)
       tempfile.close
-      output_type ||= LilyPond.configuration.default_output
-      Open3.popen3(path, "--#{output}", tempfile.path) do |stdin, stdout, stderr, wait_thr|
-        # Write the Lilypond code to stdin
-        stdin.write(lilypond_code)
-        stdin.close
+      output_type ||= default_output
+      Dir.chdir(destination) do
+        Open3.popen3(path, "--#{output_type}", tempfile.path) do |stdin, stdout, stderr, wait_thr|
+          # Write the Lilypond code to stdin
+          stdin.write(lilypond_code)
+          stdin.close
 
-        # Wait for the process to complete
-        Process.detach(wait_thr.pid)
+          # Wait for the process to complete
+          Process.detach(wait_thr.pid)
 
-        # Read and process the output and error streams
-        loop do
-          # Wait for output to become available for reading
-          ready = IO.select([stdout, stderr])
-          next unless ready
+          # Read and process the output and error streams
+          loop do
+            # Wait for output to become available for reading
+            ready = IO.select([stdout, stderr])
+            next unless ready
 
-          # Read available data from the streams
-          ready[0].each do |stream|
-            data = stream.read_nonblock(1024)
-            puts data # or process the data as necessary
+            # Read available data from the streams
+            ready[0].each do |stream|
+              data = stream.read_nonblock(1024)
+              puts data # or process the data as necessary
+            end
+          rescue IO::WaitReadable, IO::WaitWritable
+            # Continue waiting if the streams are not yet ready
+            IO.select([stdout, stderr])
+            retry
+          rescue EOFError
+            # Stop waiting if the streams have been closed
+            break
           end
-        rescue IO::WaitReadable, IO::WaitWritable
-          # Continue waiting if the streams are not yet ready
-          IO.select([stdout, stderr])
-          retry
-        rescue EOFError
-          # Stop waiting if the streams have been closed
-          break
         end
       end
       File.delete(tempfile.path)
     end
 
     private
+      def default_output
+        LilyPond.configuration.default_output
+      end
+
+      def destination
+        LilyPond.configuration.destination_directory
+      end
+
       def path
-        LilyPond.configuration.lilypond_path
+        LilyPond.configuration.lilypond_path.to_s
       end
 
   end # end self
