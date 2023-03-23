@@ -25,6 +25,7 @@ module LilyPond
 
     # Approved output types: `[:pdf, :svg, :png]` If none is provided, it defaults to
     # LilyPond.configuration.default_output, which initializes as `:pdf`
+    # Returns array of strings identifying the location of the generated files
     def generate_with_lilypond(file_name, lilypond_code, output_type = nil)
       tempfile = Tempfile.new(file_name)
       tempfile.write(lilypond_code)
@@ -61,6 +62,9 @@ module LilyPond
         end
       end
       File.delete(tempfile.path)
+
+      new_file_name = destination.to_s + "/" + file_name[0..-4]
+      return {layout: "#{new_file_name}.#{output_type}", midi: "#{new_file_name}.midi"}
     end
 
     private
