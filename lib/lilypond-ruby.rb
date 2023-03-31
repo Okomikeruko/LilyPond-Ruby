@@ -30,6 +30,7 @@ module LilyPond
       tempfile = Tempfile.new(file_name)
       tempfile.write(lilypond_code)
       tempfile.close
+      output_data = ""
       output_type ||= default_output
       Dir.chdir(destination) do
         Open3.popen3(path, "--#{output_type}", tempfile.path) do |stdin, stdout, stderr, wait_thr|
@@ -49,6 +50,7 @@ module LilyPond
             # Read available data from the streams
             ready[0].each do |stream|
               data = stream.read_nonblock(1024)
+              output_data += data
               puts data # or process the data as necessary
             end
           rescue IO::WaitReadable, IO::WaitWritable
@@ -64,7 +66,7 @@ module LilyPond
       File.delete(tempfile.path)
 
       new_file_name = destination.to_s + "/" + file_name[0..-4]
-      return {layout: "#{new_file_name}.#{output_type}", midi: "#{new_file_name}.midi"}
+      return {layout: "#{new_file_name}.#{output_type}", midi: "#{new_file_name}.midi", data: output_data}
     end
 
     private
